@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ecommerce.Classes;
 using ecommerce.Models;
 
 namespace ecommerce.Controllers
@@ -39,26 +40,43 @@ namespace ecommerce.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name");
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name");
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Name");
+            ViewBag.CityId = new SelectList(CombosHelpers.GetCities(), "CityId", "Name");
+            ViewBag.CompanyId = new SelectList(CombosHelpers.GetCompanies(), "CompanyId", "Name");
+            ViewBag.DepartmentId = new SelectList(CombosHelpers.GetDepartments(), "DepartmentId", "Name");
             return View();
         }
 
         // POST: User/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserId,UserName,FirstName,LastName,Phone,Address,Photo,DepartmentId,CityId,CompanyId")] User user)
+        public ActionResult Create(User user)
         {
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
                 db.SaveChanges();
+
+                if (user.PhotoFile != null)
+                {
+                    var folder = "~/Content/Users";
+                    var file = string.Format("{0}.jpg", user.UserId);
+                    var respose = FilesHelpers.UploadPhoto(user.PhotoFile, folder, file);
+
+                    if (respose)
+                    {
+                        var pic = string.Format("{0}/{1}", folder, file);
+                        //si respose es true, actualizamos el logo de la compania
+                        user.Photo = pic;
+                        //actalizamos la dv
+                        db.Entry(user).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                }
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", user.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", user.CompanyId);
+            ViewBag.CityId = new SelectList(CombosHelpers.GetCities(), "CityId", "Name", user.CityId);
+            ViewBag.CompanyId = new SelectList(CombosHelpers.GetCompanies(), "CompanyId", "Name", user.CompanyId);
             ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Name", user.DepartmentId);
             return View(user);
         }
@@ -75,8 +93,8 @@ namespace ecommerce.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", user.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", user.CompanyId);
+            ViewBag.CityId = new SelectList(CombosHelpers.GetCities(), "CityId", "Name", user.CityId);
+            ViewBag.CompanyId = new SelectList(CombosHelpers.GetCompanies(), "CompanyId", "Name", user.CompanyId);
             ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Name", user.DepartmentId);
             return View(user);
         }
@@ -84,7 +102,7 @@ namespace ecommerce.Controllers
         // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserId,UserName,FirstName,LastName,Phone,Address,Photo,DepartmentId,CityId,CompanyId")] User user)
+        public ActionResult Edit(User user)
         {
             if (ModelState.IsValid)
             {
@@ -92,8 +110,8 @@ namespace ecommerce.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CityId = new SelectList(db.Cities, "CityId", "Name", user.CityId);
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", user.CompanyId);
+            ViewBag.CityId = new SelectList(CombosHelpers.GetCities(), "CityId", "Name", user.CityId);
+            ViewBag.CompanyId = new SelectList(CombosHelpers.GetCompanies(), "CompanyId", "Name", user.CompanyId);
             ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Name", user.DepartmentId);
             return View(user);
         }
@@ -122,6 +140,14 @@ namespace ecommerce.Controllers
             db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public JsonResult GetCities(int departmentId)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            
+            var cities = db.Cities.Where(x => x.DepartmentId == departmentId);
+            return Json(cities);
         }
 
         protected override void Dispose(bool disposing)
