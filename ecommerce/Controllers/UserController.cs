@@ -124,6 +124,16 @@ namespace ecommerce.Controllers
 
                     }
                 }
+
+
+                var db2 = new ECommerceContext();
+                var currentUser = db2.Users.Find(user.UserId);
+                if (currentUser.UserName != user.UserName)
+                {
+                    UsersHelper.UpdateUserName(currentUser.UserName, user.UserName);
+                }
+                db2.Dispose();
+
                 //actalizamos la dv
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
@@ -143,7 +153,7 @@ namespace ecommerce.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            var user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -156,9 +166,13 @@ namespace ecommerce.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
+            var user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
+
+            //hay que borrarlo como usuario
+            UsersHelper.DeleteUser(user.UserName);
+
             return RedirectToAction("Index");
         }
 
