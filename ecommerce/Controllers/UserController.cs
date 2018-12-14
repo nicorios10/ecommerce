@@ -56,6 +56,8 @@ namespace ecommerce.Controllers
                 db.Users.Add(user);
                 db.SaveChanges();
 
+                UsersHelper.CreateUserASP(user.UserName, "User");
+
                 if (user.PhotoFile != null)
                 {
                     var folder = "~/Content/Users";
@@ -106,8 +108,26 @@ namespace ecommerce.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (user.PhotoFile != null)
+                {
+                    var pic = string.Empty;
+
+                    var folder = "~/Content/Users";
+                    var file = string.Format("{0}.jpg", user.UserId);
+                    var respose = FilesHelpers.UploadPhoto(user.PhotoFile, folder, file);
+
+                    if (respose)
+                    {
+                        pic = string.Format("{0}/{1}", folder, file);
+                        //si respose es true, actualizamos el logo de la compania
+                        user.Photo = pic;
+
+                    }
+                }
+                //actalizamos la dv
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             ViewBag.CityId = new SelectList(CombosHelpers.GetCities(), "CityId", "Name", user.CityId);

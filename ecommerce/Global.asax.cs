@@ -9,6 +9,7 @@ using System.Web.Routing;
 using System.Data.Entity;
 using ecommerce.Models;
 using ecommerce.Migrations;
+using ecommerce.Classes;
 
 namespace ecommerce
 {
@@ -17,11 +18,20 @@ namespace ecommerce
         protected void Application_Start()
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ECommerceContext, Configuration>());
+            //garantizamos que la aplicacion tenga los roles y que halla un superusuario
+            CheckRolesAndSuperUser();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        private void CheckRolesAndSuperUser()
+        {
+            UsersHelper.CheckRole("Admin");
+            UsersHelper.CheckRole("User");
+            UsersHelper.CheckSuperUser();
         }
     }
 }
