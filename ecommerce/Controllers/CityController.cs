@@ -11,18 +11,17 @@ using ecommerce.Models;
 
 namespace ecommerce.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CityController : Controller
     {
         private ECommerceContext dbContext = new ECommerceContext();
 
-        // GET: City
         public ActionResult Index()
         {
             var cities = dbContext.Cities.Include(c => c.Department);
             return View(cities.ToList());
         }
-
-        // GET: City/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,8 +35,7 @@ namespace ecommerce.Controllers
             }
             return View(city);
         }
-
-        // GET: City/Create
+        
         public ActionResult Create()
         {          
             //el viewBag sirve para conectar datos entre  el controlador y la vista
@@ -47,10 +45,7 @@ namespace ecommerce.Controllers
                 , "Name");
             return View();
         }
-
-        // POST: City/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(City city)
@@ -90,8 +85,7 @@ namespace ecommerce.Controllers
                 , city.DepartmentId);
             return View(city);
         }
-
-        // GET: City/Edit/5
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -127,8 +121,7 @@ namespace ecommerce.Controllers
                 , city.DepartmentId);
             return View(city);
         }
-
-        // GET: City/Delete/5
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -142,8 +135,7 @@ namespace ecommerce.Controllers
             }
             return View(city);
         }
-
-        // POST: City/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

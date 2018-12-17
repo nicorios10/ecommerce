@@ -10,18 +10,26 @@ using ecommerce.Models;
 
 namespace ecommerce.Controllers
 {
+    [Authorize(Roles ="User")]
     public class CategoryController : Controller
     {
         private ECommerceContext db = new ECommerceContext();
-
-        // GET: Category
+        
         public ActionResult Index()
         {
-            var categories = db.Categories.Include(c => c.Company);
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+            //validamos que exista el usuario
+            if (user == null)
+            {
+                return RedirectToAction("Index","Home");
+            }
+
+            //Le decimos que solo nos busque las categorias del usuario logueado
+            var categories = db.Categories.Where(c=>c.CompanyId==user.CompanyId);
+
             return View(categories.ToList());
         }
-
-        // GET: Category/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,17 +43,24 @@ namespace ecommerce.Controllers
             }
             return View(category);
         }
-
-        // GET: Category/Create
+        
         public ActionResult Create()
         {
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name");
-            return View();
-        }
+            var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
+            //validamos que exista
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-        // POST: Category/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+            var category = new Category
+            {
+                CompanyId = user.CompanyId
+            };
+
+            return View(category);
+        }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CategoryId,Description,CompanyId")] Category category)
@@ -60,8 +75,7 @@ namespace ecommerce.Controllers
             ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", category.CompanyId);
             return View(category);
         }
-
-        // GET: Category/Edit/5
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,16 +87,12 @@ namespace ecommerce.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", category.CompanyId);
             return View(category);
         }
-
-        // POST: Category/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryId,Description,CompanyId")] Category category)
+        public ActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
             {
@@ -93,8 +103,7 @@ namespace ecommerce.Controllers
             ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", category.CompanyId);
             return View(category);
         }
-
-        // GET: Category/Delete/5
+        
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -108,8 +117,7 @@ namespace ecommerce.Controllers
             }
             return View(category);
         }
-
-        // POST: Category/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

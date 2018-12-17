@@ -10,17 +10,19 @@ using ecommerce.Models;
 
 namespace ecommerce.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DepartmentController : Controller
     {
         private ECommerceContext dbContext = new ECommerceContext();
 
-        // GET: Department
+        #region Index      
         public ActionResult Index()
         {
             return View(dbContext.Departments.ToList());
         }
+        #endregion
 
-        // GET: Department/Details/5
+        #region Details       
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -34,16 +36,16 @@ namespace ecommerce.Controllers
             }
             return View(department);
         }
+        #endregion
 
-        // GET: Department/Create
+        #region Create
         public ActionResult Create()
         {
             return View();
         }
+        #endregion
 
-        // POST: Department/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        #region Create POST       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "DepartmentId,Name")] Department department)
@@ -71,11 +73,11 @@ namespace ecommerce.Controllers
                     }
                 }
             }
-
             return View(department);
         }
+        #endregion
 
-        // GET: Department/Edit/5
+        #region Edit       
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -89,7 +91,9 @@ namespace ecommerce.Controllers
             }
             return View(department);
         }
+        #endregion
 
+        #region Edit POST       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Department department)
@@ -119,8 +123,9 @@ namespace ecommerce.Controllers
             }
             return View(department);
         }
+        #endregion
 
-        // GET: Department/Delete/5
+        #region Delete     
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -134,8 +139,9 @@ namespace ecommerce.Controllers
             }
             return View(department);
         }
+        #endregion
 
-        // POST: Department/Delete/5
+        #region Delete POST
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -164,7 +170,10 @@ namespace ecommerce.Controllers
             //si hubo error lo voy a devolver a la vista
             return View(department);
         }
+        #endregion
 
+
+        #region *Dispose*
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -173,5 +182,6 @@ namespace ecommerce.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }
