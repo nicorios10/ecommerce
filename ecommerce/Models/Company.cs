@@ -55,5 +55,7 @@ namespace ecommerce.Models
 
         //le decimos que una compania tiene varios usuarios
         public virtual IColection<User> Users { get; set; }
+        //le decimos que una compania tiene varias categorias
+        public virtual IColection<Company> Companies { get; set; }
     }
 }
