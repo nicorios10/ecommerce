@@ -26,5 +26,7 @@ namespace ecommerce.Models
 
         public virtual Company Company { get; set; }
 
+        public virtual IColection<Product> Products { get; set; }
+
     }
 }

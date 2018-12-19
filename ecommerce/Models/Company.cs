@@ -30,6 +30,10 @@ namespace ecommerce.Models
         [DataType(DataType.ImageUrl)]
         public string Logo { get; set; }
 
+        [NotMapped]//para que no se guarde en db, solo lo queremos de forma temporal
+        //para manipular la imagen
+        /*la propiedad Logo es la ruto y PhotoFile es el archivo*/
+        public HttpPostedFileBase LogoFile { get; set; }
 
         /*Llave foranea*/
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
@@ -41,10 +45,7 @@ namespace ecommerce.Models
         [Range(1, double.MaxValue, ErrorMessage = "Deve seleccionar un {0}")]
         public int CityId { get; set; }
 
-        [NotMapped]//para que no se guarde en db, solo lo queremos de forma temporal
-        //para manipular la imagen
-        /*la propiedad Logo es la ruto y PhotoFile es el archivo*/
-        public HttpPostedFileBase LogoFile { get; set; }
+        
 
 
         //le decimos que una compania tiene varios departamentos
@@ -55,7 +56,10 @@ namespace ecommerce.Models
 
         //le decimos que una compania tiene varios usuarios
         public virtual IColection<User> Users { get; set; }
-        //le decimos que una compania tiene varias categorias
+        
         public virtual IColection<Company> Companies { get; set; }
+
+        public virtual IColection<Tax> Taxes { get; set; }
+        public virtual IColection<Product> Products { get; set; }
     }
 }
