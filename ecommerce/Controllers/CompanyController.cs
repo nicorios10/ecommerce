@@ -58,7 +58,7 @@ namespace ecommerce.Controllers
                 if (company.LogoFile != null)
                 {
                     var folder = "~/Content/Logos";
-                    var file = string.Format("{0}.jpg", company.CompanyId);
+                    var file = string.Format("{0}-{1}.jpg", company.CompanyId, company.Name);
                     var respose = FilesHelpers.UploadPhoto(company.LogoFile, folder, file);
 
                     if (respose)
@@ -111,7 +111,7 @@ namespace ecommerce.Controllers
                     var pic =string.Empty;
 
                     var folder = "~/Content/Logos";
-                    var file = string.Format("{0}.jpg", company.CompanyId);
+                    var file = string.Format("{0}-{1}.jpg", company.CompanyId, company.Name);
                     var respose = FilesHelpers.UploadPhoto(company.LogoFile, folder, file);
 
                     if (respose)

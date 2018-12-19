@@ -16,44 +16,47 @@ namespace ecommerce.Models
         [Range(1, double.MaxValue, ErrorMessage = "Deve seleccionar un {0}")]
         [Index("Product_CompanyId_Description_Index", 1, IsUnique = true)]
         [Index("Product_CompanyId_BarCode_Index", 1, IsUnique = true)]
-        [Display(Name = "Company")]
+        [Display(Name = "Compania")]
         public int CompanyId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(50, ErrorMessage = "El campo {0} deve contener menos de {1} caracteres")]
         [Index("Product_CompanyId_Description_Index", 2, IsUnique = true)]
-        [Display(Name = "Description")]
+        [Display(Name = "Nombre")]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(13, ErrorMessage = "El campo {0} deve contener menos de {1} caracteres")]
         [Index("Product_CompanyId_BarCode_Index", 2, IsUnique = true)]
-        [Display(Name = "Bar Code")]
+        [Display(Name = "Codigo de Barra")]
         public string BarCode { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Range(1, double.MaxValue, ErrorMessage = "Deve seleccionar un {0}")]
-        [Display(Name = "Category")]
+        [Display(Name = "Categoria")]
         public int CategoryId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Range(1, double.MaxValue, ErrorMessage = "Deve seleccionar un {0}")]
-        [Display(Name = "Tax")]
+        [Display(Name = "Impuesto")]
         public int TaxId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         [Range(0, double.MaxValue, ErrorMessage = "Deve seleccionar un {0} de entre {1} y {2}")]
+        [Display(Name = "Precio")]
         public decimal Price { get; set; }
 
         [DataType(DataType.ImageUrl)]
         public string Image { get; set; }
 
         [NotMapped]
+        [Display(Name ="Imagen")]
         public HttpPostedFileBase ImageFile { get; set; }
 
 
         [DataType(DataType.MultilineText)]
+        [Display(Name = "Descripcion")]
         public string Remarks { get; set; }
 
         //FK's

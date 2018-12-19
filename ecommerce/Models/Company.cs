@@ -31,8 +31,9 @@ namespace ecommerce.Models
         public string Logo { get; set; }
 
         [NotMapped]//para que no se guarde en db, solo lo queremos de forma temporal
-        //para manipular la imagen
-        /*la propiedad Logo es la ruto y PhotoFile es el archivo*/
+                   //para manipular la imagen
+                   /*la propiedad Logo es la ruto y PhotoFile es el archivo*/
+        [Display(Name = "Imagen")]
         public HttpPostedFileBase LogoFile { get; set; }
 
         /*Llave foranea*/

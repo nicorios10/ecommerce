@@ -62,7 +62,7 @@ namespace ecommerce.Controllers
                 if (user.PhotoFile != null)
                 {
                     var folder = "~/Content/Users";
-                    var file = string.Format("{0}.jpg", user.UserId);
+                    var file = string.Format("{0}-{1}.jpg", user.UserId, user.FullName);
                     var respose = FilesHelpers.UploadPhoto(user.PhotoFile, folder, file);
 
                     if (respose)
@@ -114,7 +114,7 @@ namespace ecommerce.Controllers
                     var pic = string.Empty;
 
                     var folder = "~/Content/Users";
-                    var file = string.Format("{0}.jpg", user.UserId);
+                    var file = string.Format("{0}-{1}.jpg", user.UserId,user.FullName);
                     var respose = FilesHelpers.UploadPhoto(user.PhotoFile, folder, file);
 
                     if (respose)

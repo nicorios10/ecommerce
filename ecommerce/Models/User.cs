@@ -40,6 +40,7 @@ namespace ecommerce.Models
         [DataType(DataType.ImageUrl)]
         public string Photo { get; set; }
         [NotMapped]
+        [Display(Name = "Imagen")]
         public HttpPostedFileBase PhotoFile { get; set; }
 
 
