@@ -22,9 +22,9 @@ namespace ecommerce.Models
         public string Name { get; set; }
 
         //le decimos que un depatamento tiene varias ciudades
-        public virtual IColection<City> Cities { get; set; }
-        public virtual IColection<Company> Companies { get; set; }
-        public virtual IColection<User> Users { get; set; }
-        public virtual IColection<Warehouse> Warehouses { get; set; }
+        public virtual ICollection<City> Cities { get; set; }
+        public virtual ICollection<Company> Companies { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Warehouse> Warehouses { get; set; }
     }
 }

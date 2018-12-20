@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -59,9 +60,16 @@ namespace ecommerce.Models
         [Display(Name = "Descripcion")]
         public string Remarks { get; set; }
 
+        //propiedad de solo lectura
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
+        public double Stock { get { return Inventories.Sum(i => i.Stock); } }
+
         //FK's
         public virtual Company Company { get; set; }
         public virtual Category Category { get; set; }
         public virtual Tax Tax { get; set; }
+
+        public virtual Collection<Inventory> Inventories { get; set; }
+
     }
 }

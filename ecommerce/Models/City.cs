@@ -30,9 +30,8 @@ namespace ecommerce.Models
         public virtual Department Department { get; set; }
 
         //le decimos que una ciudad tiene varias companias
-        public virtual IColection<Company> Company { get; set; }
-        public virtual IColection<User> Users { get; set; }
-        public virtual IColection<Warehouse> Warehouses { get; set; }
-
+        public virtual ICollection<Company> Companies { get; set; }
+        //le decimos que una ciudad tiene varios usuarios
+        public virtual ICollection<User> Users { get; set; }
     }
 }
