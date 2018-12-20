@@ -98,7 +98,7 @@ namespace ecommerce.Controllers
             }
             ViewBag.CityId = new SelectList(CombosHelpers.GetCities(), "CityId", "Name", user.CityId);
             ViewBag.CompanyId = new SelectList(CombosHelpers.GetCompanies(), "CompanyId", "Name", user.CompanyId);
-            ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Name", user.DepartmentId);
+            ViewBag.DepartmentId = new SelectList(CombosHelpers.GetDepartments(), "DepartmentId", "Name", user.DepartmentId);
             return View(user);
         }
 

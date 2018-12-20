@@ -23,9 +23,8 @@ namespace ecommerce.Models
 
         //le decimos que un depatamento tiene varias ciudades
         public virtual IColection<City> Cities { get; set; }
-        //le decimos que un depatamento tiene varias companias
         public virtual IColection<Company> Companies { get; set; }
-        //le decimos que un depatamento tiene varios usuarios
         public virtual IColection<User> Users { get; set; }
+        public virtual IColection<Warehouse> Warehouses { get; set; }
     }
 }

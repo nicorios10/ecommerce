@@ -33,5 +33,7 @@ namespace ecommerce.Models
         public System.Data.Entity.DbSet<ecommerce.Models.Tax> Taxes { get; set; }
 
         public System.Data.Entity.DbSet<ecommerce.Models.Product> Products { get; set; }
+
+        public System.Data.Entity.DbSet<ecommerce.Models.Warehouse> Warehouses { get; set; }
     }
 }

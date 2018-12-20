@@ -7,60 +7,48 @@ using System.Web;
 
 namespace ecommerce.Models
 {
-    public class Company
+    public class Warehouse
     {
         [Key]
-        public int CompanyId { get; set; }
+        public int WarehouseId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Range(1, double.MaxValue, ErrorMessage = "Deve seleccionar un {0}")]
+        [Index("Warehouse_CompanyId_Name_Index", 1, IsUnique = true)]
+        [Display(Name = "Compania")]
+        public int CompanyId { get; set; }
+
+        /*El user name va as ser el mail*/
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(50, ErrorMessage = "El campo {0} deve contener menos de {1} caracteres")]
-        [Display(Name = "Company")]
-        [Index("Company_Name_Index", IsUnique = true)]
+        [Display(Name = "Warehouser")]
+        [Index("Warehouse_CompanyId_Name_Index", 2, IsUnique = true)]//un indice por compania
         public string Name { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(20, ErrorMessage = "El campo {0} deve contener menos de {1} caracteres")]
         [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Telefono")]
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(100, ErrorMessage = "El campo {0} deve contener menos de {1} caracteres")]
+        [Display(Name = "Direccion")]
         public string Address { get; set; }
 
-        [DataType(DataType.ImageUrl)]
-        public string Logo { get; set; }
-
-        [NotMapped]//para que no se guarde en db, solo lo queremos de forma temporal
-                   //para manipular la imagen
-                   /*la propiedad Logo es la ruto y PhotoFile es el archivo*/
-        [Display(Name = "Imagen")]
-        public HttpPostedFileBase LogoFile { get; set; }
-
-        /*Llave foranea*/
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Range(1, double.MaxValue, ErrorMessage = "Deve seleccionar un {0}")]
+        [Display(Name = "Departamento")]
         public int DepartmentId { get; set; }
 
         /*Llave foranea*/
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Range(1, double.MaxValue, ErrorMessage = "Deve seleccionar un {0}")]
+        [Display(Name = "City")]
         public int CityId { get; set; }
-
         
-
-
-        //le decimos que una compania tiene varios departamentos
         public virtual Department Department { get; set; }
-        //le decimos que una compania tiene varias ciudades
         public virtual City City { get; set; }
-
-
-        //le decimos que una compania tiene varios usuarios
-        public virtual IColection<User> Users { get; set; }       
-        public virtual IColection<Company> Companies { get; set; }
-        public virtual IColection<Tax> Taxes { get; set; }
-        public virtual IColection<Product> Products { get; set; }
-        public virtual IColection<Warehouse> Warehouses { get; set; }
-
+        public virtual Company Company { get; set; }
     }
 }
