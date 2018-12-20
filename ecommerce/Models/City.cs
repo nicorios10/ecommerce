@@ -29,9 +29,9 @@ namespace ecommerce.Models
         //virtual, no la manejamos en el modelo sino que va a virtualizarce
         public virtual Department Department { get; set; }
 
-        //le decimos que una ciudad tiene varias companias
         public virtual ICollection<Company> Companies { get; set; }
-        //le decimos que una ciudad tiene varios usuarios
         public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
+
     }
 }

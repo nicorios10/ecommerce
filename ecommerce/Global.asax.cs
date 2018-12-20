@@ -31,6 +31,7 @@ namespace ecommerce
         {
             UsersHelper.CheckRole("Admin");
             UsersHelper.CheckRole("User");
+            UsersHelper.CheckRole("Customer");
             UsersHelper.CheckSuperUser();
         }
     }

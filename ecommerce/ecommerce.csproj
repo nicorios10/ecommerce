@@ -215,10 +215,12 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\TaxController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WarehouseController.cs" />
@@ -230,12 +232,14 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\ECommerceContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Models\Tax.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Warehouse.cs" />
@@ -341,6 +345,16 @@
     <Content Include="Views\Warehouse\Details.cshtml" />
     <Content Include="Views\Warehouse\Edit.cshtml" />
     <Content Include="Views\Warehouse\Index.cshtml" />
+    <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\Customer\Delete.cshtml" />
+    <Content Include="Views\Customer\Details.cshtml" />
+    <Content Include="Views\Customer\Edit.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\State\Create.cshtml" />
+    <Content Include="Views\State\Delete.cshtml" />
+    <Content Include="Views\State\Details.cshtml" />
+    <Content Include="Views\State\Edit.cshtml" />
+    <Content Include="Views\State\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

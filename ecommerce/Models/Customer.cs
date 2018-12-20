@@ -7,16 +7,33 @@ using System.Web;
 
 namespace ecommerce.Models
 {
-    public class Company
+    public class Customer
     {
         [Key]
+        public int CustomerId { get; set; }
+
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Range(1, double.MaxValue, ErrorMessage = "Deve seleccionar un {0}")]
+        [Display(Name = "Company")]
         public int CompanyId { get; set; }
+
+        /*El user name va as ser el mail*/
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [MaxLength(256, ErrorMessage = "El campo {0} deve contener menos de {1} caracteres")]
+        [Display(Name = "E-Mail")]
+        [Index("Customer_UserName_Index", IsUnique = true)]
+        [DataType(DataType.EmailAddress)]
+        public string UserName { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(50, ErrorMessage = "El campo {0} deve contener menos de {1} caracteres")]
-        [Display(Name = "Company")]
-        [Index("Company_Name_Index", IsUnique = true)]
-        public string Name { get; set; }
+        [Display(Name = "Primer Nombre")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [MaxLength(50, ErrorMessage = "El campo {0} deve contener menos de {1} caracteres")]
+        [Display(Name = "Apellido")]
+        public string LastName { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [MaxLength(20, ErrorMessage = "El campo {0} deve contener menos de {1} caracteres")]
@@ -27,41 +44,21 @@ namespace ecommerce.Models
         [MaxLength(100, ErrorMessage = "El campo {0} deve contener menos de {1} caracteres")]
         public string Address { get; set; }
 
-        [DataType(DataType.ImageUrl)]
-        public string Logo { get; set; }
-
-        [NotMapped]//para que no se guarde en db, solo lo queremos de forma temporal
-                   //para manipular la imagen
-                   /*la propiedad Logo es la ruto y PhotoFile es el archivo*/
-        [Display(Name = "Imagen")]
-        public HttpPostedFileBase LogoFile { get; set; }
-
-        /*Llave foranea*/
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Range(1, double.MaxValue, ErrorMessage = "Deve seleccionar un {0}")]
+        [Display(Name = "Departamento")]
         public int DepartmentId { get; set; }
 
-        /*Llave foranea*/
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Range(1, double.MaxValue, ErrorMessage = "Deve seleccionar un {0}")]
+        [Display(Name = "Ciudad")]
         public int CityId { get; set; }
 
+        [Display(Name = "Comprador Nombre Completo")]
+        public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
         
-
-
-        //le decimos que una compania tiene varios departamentos
         public virtual Department Department { get; set; }
-        //le decimos que una compania tiene varias ciudades
         public virtual City City { get; set; }
-
-
-        //le decimos que una compania tiene varios usuarios
-        public virtual ICollection<User> Users { get; set; }       
-        public virtual ICollection<Company> Companies { get; set; }
-        public virtual ICollection<Tax> Taxes { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
-        public virtual ICollection<Warehouse> Warehouses { get; set; }
-        public virtual ICollection<Customer> Customers { get; set; }
-
+        public virtual Company Company { get; set; }
     }
 }
