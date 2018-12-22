@@ -16,12 +16,15 @@ namespace ecommerce.Controllers
     {
         private ECommerceContext dbContext = new ECommerceContext();
 
+        #region Index
         public ActionResult Index()
         {
             var cities = dbContext.Cities.Include(c => c.Department);
             return View(cities.ToList());
         }
-        
+        #endregion
+
+        #region Details
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,7 +38,9 @@ namespace ecommerce.Controllers
             }
             return View(city);
         }
-        
+        #endregion
+
+        #region Create
         public ActionResult Create()
         {          
             //el viewBag sirve para conectar datos entre  el controlador y la vista
@@ -85,7 +90,9 @@ namespace ecommerce.Controllers
                 , city.DepartmentId);
             return View(city);
         }
-        
+        #endregion
+
+        #region Edit
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -121,7 +128,9 @@ namespace ecommerce.Controllers
                 , city.DepartmentId);
             return View(city);
         }
-        
+        #endregion
+
+        #region Delete
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -145,7 +154,10 @@ namespace ecommerce.Controllers
             dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
+        #endregion
 
+
+        #region Dispose
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -154,5 +166,6 @@ namespace ecommerce.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

@@ -15,11 +15,14 @@ namespace ecommerce.Controllers
     {
         private ECommerceContext db = new ECommerceContext();
 
+        #region Index
         public ActionResult Index()
         {
             return View(db.States.ToList());
         }
+        #endregion
 
+        #region Details
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -33,7 +36,9 @@ namespace ecommerce.Controllers
             }
             return View(state);
         }
+        #endregion
 
+        #region Create
         public ActionResult Create()
         {
             return View();
@@ -52,7 +57,9 @@ namespace ecommerce.Controllers
 
             return View(state);
         }
+        #endregion
 
+        #region Edit
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,7 +86,9 @@ namespace ecommerce.Controllers
             }
             return View(state);
         }
+        #endregion
 
+        #region Delete
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,7 +114,10 @@ namespace ecommerce.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        #endregion
 
+
+        #region Dispose
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -114,5 +126,6 @@ namespace ecommerce.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

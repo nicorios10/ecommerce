@@ -16,6 +16,7 @@ namespace ecommerce.Controllers
     {
         private ECommerceContext db = new ECommerceContext();
 
+        #region Index
         public ActionResult Index()
         {
             var user = db.Users.Where(u=>u.UserName==User.Identity.Name).FirstOrDefault();
@@ -28,7 +29,9 @@ namespace ecommerce.Controllers
 
             return View(products.ToList());
         }
+        #endregion
 
+        #region Details
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -42,7 +45,9 @@ namespace ecommerce.Controllers
             }
             return View(product);
         }
+        #endregion
 
+        #region Create
         public ActionResult Create()
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
@@ -90,7 +95,9 @@ namespace ecommerce.Controllers
             ViewBag.TaxId = new SelectList(CombosHelpers.GetTaxes(user.CompanyId), "TaxId", "Description", product.TaxId);
             return View(product);
         }
+        #endregion
 
+        #region Edit
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -142,7 +149,9 @@ namespace ecommerce.Controllers
 
             return View(product);
         }
+        #endregion
 
+        #region Delete
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -168,7 +177,10 @@ namespace ecommerce.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        #endregion
 
+
+        #region Dispose
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -177,5 +189,6 @@ namespace ecommerce.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

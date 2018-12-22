@@ -68,9 +68,7 @@ namespace ecommerce.Models
 
         //le decimos que una compania tiene varios departamentos
         public virtual Department Department { get; set; }
-        //le decimos que una compania tiene varias ciudades
         public virtual City City { get; set; }
-        //le decimos que una compania tiene varias companias
         public virtual Company Company { get; set; }
     }
 }

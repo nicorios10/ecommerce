@@ -16,6 +16,7 @@ namespace ecommerce.Controllers
     {
         private ECommerceContext db = new ECommerceContext();
 
+        #region Index
         public ActionResult Index()
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
@@ -23,7 +24,9 @@ namespace ecommerce.Controllers
             var warehouses = db.Warehouses.Where(w => w.CompanyId==user.CompanyId).Include(w => w.City).Include(w => w.Department);
             return View(warehouses.ToList());
         }
+        #endregion
 
+        #region Details
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,7 +40,9 @@ namespace ecommerce.Controllers
             }
             return View(warehouse);
         }
+        #endregion
 
+        #region Create
         public ActionResult Create()
         {
             ViewBag.CityId = new SelectList(CombosHelpers.GetCities(), "CityId", "Name");
@@ -71,7 +76,9 @@ namespace ecommerce.Controllers
 
             return View(warehouse);
         }
+        #endregion
 
+        #region Edit
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -104,7 +111,9 @@ namespace ecommerce.Controllers
             ViewBag.DepartmentId = new SelectList(CombosHelpers.GetDepartments(), "DepartmentId", "Name", warehouse.DepartmentId);
             return View(warehouse);
         }
+        #endregion
 
+        #region Delete
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -128,7 +137,10 @@ namespace ecommerce.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        #endregion
 
+
+        #region Dispose
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -137,5 +149,6 @@ namespace ecommerce.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

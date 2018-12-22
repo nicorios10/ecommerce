@@ -51,17 +51,17 @@ namespace ecommerce.Models
 
         //le decimos que una compania tiene varios departamentos
         public virtual Department Department { get; set; }
-        //le decimos que una compania tiene varias ciudades
         public virtual City City { get; set; }
 
 
         //le decimos que una compania tiene varios usuarios
-        public virtual ICollection<User> Users { get; set; }       
-        public virtual ICollection<Company> Companies { get; set; }
+        //public virtual ICollection<User> Users { get; set; }       
+        public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Tax> Taxes { get; set; }
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Warehouse> Warehouses { get; set; }
         public virtual ICollection<Customer> Customers { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
 
     }
 }

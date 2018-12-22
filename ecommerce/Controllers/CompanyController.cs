@@ -16,14 +16,15 @@ namespace ecommerce.Controllers
     {
         private ECommerceContext db = new ECommerceContext();
 
-        // GET: Company
+        #region Index
         public ActionResult Index()
         {
             var companies = db.Companies.Include(c => c.City).Include(c => c.Department);
             return View(companies.ToList());
         }
+        #endregion
 
-        // GET: Company/Details/5
+        #region Details
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,8 +38,9 @@ namespace ecommerce.Controllers
             }
             return View(company);
         }
+        #endregion
 
-        // GET: Company/Create
+        #region Create
         public ActionResult Create()
         {
             ViewBag.CityId = new SelectList(CombosHelpers.GetCities(), "CityId", "Name");
@@ -78,8 +80,9 @@ namespace ecommerce.Controllers
             ViewBag.DepartmentId = new SelectList(CombosHelpers.GetDepartments(), "DepartmentId", "Name", company.DepartmentId);
             return View(company);
         }
+        #endregion
 
-        // GET: Company/Edit/5
+        #region Edit
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -132,8 +135,9 @@ namespace ecommerce.Controllers
             ViewBag.DepartmentId = new SelectList(CombosHelpers.GetDepartments(), "DepartmentId", "Name", company.DepartmentId);
             return View(company);
         }
+        #endregion
 
-        //Borrar - Get
+        #region Delete
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -168,7 +172,10 @@ namespace ecommerce.Controllers
             var cities = db.Cities.Where(x => x.DepartmentId == departmentId);
             return Json(cities);
         }
+        #endregion
 
+
+        #region Dispose
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -177,5 +184,6 @@ namespace ecommerce.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

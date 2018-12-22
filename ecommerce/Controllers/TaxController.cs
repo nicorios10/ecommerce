@@ -15,7 +15,7 @@ namespace ecommerce.Controllers
     {
         private ECommerceContext db = new ECommerceContext();
 
-        // GET: Tax
+        #region Index
         public ActionResult Index()
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
@@ -28,8 +28,9 @@ namespace ecommerce.Controllers
             var taxes = db.Taxes.Where(t =>t.CompanyId==user.CompanyId);
             return View(taxes.ToList());
         }
+        #endregion
 
-        // GET: Tax/Details/5
+        #region Details
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -43,8 +44,9 @@ namespace ecommerce.Controllers
             }
             return View(tax);
         }
+        #endregion
 
-        // GET: Tax/Create
+        #region Create
         public ActionResult Create()
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
@@ -73,8 +75,9 @@ namespace ecommerce.Controllers
 
             return View(tax);
         }
+        #endregion
 
-        // GET: Tax/Edit/5
+        #region Edit
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -103,8 +106,9 @@ namespace ecommerce.Controllers
             }
             return View(tax);
         }
+        #endregion
 
-        
+        #region Delete
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -129,7 +133,10 @@ namespace ecommerce.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        #endregion
 
+
+        #region Dispose
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -138,5 +145,6 @@ namespace ecommerce.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

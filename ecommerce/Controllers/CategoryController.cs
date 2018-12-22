@@ -14,7 +14,8 @@ namespace ecommerce.Controllers
     public class CategoryController : Controller
     {
         private ECommerceContext db = new ECommerceContext();
-        
+
+        #region Index
         public ActionResult Index()
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
@@ -29,7 +30,9 @@ namespace ecommerce.Controllers
 
             return View(categories.ToList());
         }
-        
+        #endregion
+
+        #region Details
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -43,7 +46,9 @@ namespace ecommerce.Controllers
             }
             return View(category);
         }
-        
+        #endregion
+
+        #region Create
         public ActionResult Create()
         {
             var user = db.Users.Where(u => u.UserName == User.Identity.Name).FirstOrDefault();
@@ -60,7 +65,8 @@ namespace ecommerce.Controllers
 
             return View(category);
         }
-        
+
+         
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
@@ -75,7 +81,9 @@ namespace ecommerce.Controllers
             ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", category.CompanyId);
             return View(category);
         }
-        
+        #endregion
+
+        #region Edit
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -89,7 +97,8 @@ namespace ecommerce.Controllers
             }
             return View(category);
         }
-        
+
+         
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Category category)
@@ -103,7 +112,9 @@ namespace ecommerce.Controllers
             ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "Name", category.CompanyId);
             return View(category);
         }
-        
+        #endregion
+
+        #region Delete
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -117,7 +128,8 @@ namespace ecommerce.Controllers
             }
             return View(category);
         }
-        
+
+         
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -127,7 +139,10 @@ namespace ecommerce.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        #endregion
 
+
+        #region Dispose
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -136,5 +151,6 @@ namespace ecommerce.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

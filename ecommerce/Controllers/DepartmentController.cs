@@ -43,9 +43,7 @@ namespace ecommerce.Controllers
         {
             return View();
         }
-        #endregion
-
-        #region Create POST       
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "DepartmentId,Name")] Department department)
@@ -91,9 +89,7 @@ namespace ecommerce.Controllers
             }
             return View(department);
         }
-        #endregion
-
-        #region Edit POST       
+               
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Department department)
@@ -139,9 +135,7 @@ namespace ecommerce.Controllers
             }
             return View(department);
         }
-        #endregion
-
-        #region Delete POST
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -173,7 +167,7 @@ namespace ecommerce.Controllers
         #endregion
 
 
-        #region *Dispose*
+        #region Dispose
         protected override void Dispose(bool disposing)
         {
             if (disposing)

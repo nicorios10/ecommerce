@@ -16,14 +16,15 @@ namespace ecommerce.Controllers
     {
         private ECommerceContext db = new ECommerceContext();
 
-        // GET: User
+        #region Index
         public ActionResult Index()
         {
             var users = db.Users.Include(u => u.City).Include(u => u.Company).Include(u => u.Department);
             return View(users.ToList());
         }
+        #endregion
 
-        // GET: User/Details/5
+        #region Details
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,8 +38,9 @@ namespace ecommerce.Controllers
             }
             return View(user);
         }
+        #endregion
 
-        // GET: User/Create
+        #region Create
         public ActionResult Create()
         {
             ViewBag.CityId = new SelectList(CombosHelpers.GetCities(), "CityId", "Name");
@@ -47,7 +49,6 @@ namespace ecommerce.Controllers
             return View();
         }
 
-        // POST: User/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(User user)
@@ -83,8 +84,9 @@ namespace ecommerce.Controllers
             ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Name", user.DepartmentId);
             return View(user);
         }
+        #endregion
 
-        // GET: User/Edit/5
+        #region Edit
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -102,7 +104,6 @@ namespace ecommerce.Controllers
             return View(user);
         }
 
-        // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(User user)
@@ -146,8 +147,9 @@ namespace ecommerce.Controllers
             ViewBag.DepartmentId = new SelectList(db.Departments, "DepartmentId", "Name", user.DepartmentId);
             return View(user);
         }
+        #endregion
 
-        // GET: User/Delete/5
+        #region Delete
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -162,7 +164,6 @@ namespace ecommerce.Controllers
             return View(user);
         }
 
-        // POST: User/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -184,7 +185,10 @@ namespace ecommerce.Controllers
             var cities = db.Cities.Where(x => x.DepartmentId == departmentId);
             return Json(cities);
         }
+        #endregion
 
+
+        #region Dispose
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -193,5 +197,6 @@ namespace ecommerce.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }
